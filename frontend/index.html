@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head><title>Playlist</title></head>
+<body>
+    <h1 id="kantin-name">Memuat...</h1>
+  <ul id="musik-list"></ul>
+
+    <hr>
+    <h3>Tambah Musik Baru:</h3>
+    <input type="text" id="musik-input" placeholder="Nama musik...">
+    <button onclick="tambahMusik()">Tambah</button>
+
+
+    <script>
+    
+        const API_URL = "/api"
+
+        function loadData() {
+            fetch(`${API_URL}/info`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('playlist-name').innerText = data.nama_playlist;
+                    const list = document.getElementById('musik-list');
+                    list.innerHTML = '';
+                    data.musik.forEach(item => {
+                        let li = document.createElement('li');
+                        li.innerText = item;
+                        list.appendChild(li);
+                    });
+                });
+        }
+
+        function tambahMusik() {
+            const input = document.getElementById('musik-input');
+            fetch(`${API_URL}/add-musik`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ item: input.value })
+            })
+            .then(res => res.json())
+            .then(() => {
+                input.value = '';
+                loadData();
+            });
+        }
+        loadData();
+    </script>
+</body>
+</html>
