@@ -2,7 +2,7 @@
 <html>
 <head><title>Playlist</title></head>
 <body>
-    <h1 id="kantin-name">Memuat...</h1>
+    <h1 id="playlist-name">Memuat...</h1>
   <ul id="musik-list"></ul>
 
     <hr>
@@ -19,7 +19,7 @@
             fetch(`${API_URL}/info`)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('playlist-name').innerText = data.nama_playlist;
+                    document.getElementById('playlist-name').innerText = data.nama_musik;
                     const list = document.getElementById('musik-list');
                     list.innerHTML = '';
                     data.musik.forEach(item => {
